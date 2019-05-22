@@ -34,7 +34,7 @@
           <el-table-column prop="value">
             <template slot-scope="scope">
               <div v-if="scope.row.index == 'percentSwitch'">
-                <div v-if="scope.row.value <= 100">
+                <div v-if="scope.row.value < 100">
                   <el-progress :text-inside="true" :stroke-width="24" :percentage="scope.row.value"></el-progress>
                 </div>
                 <div v-else>
@@ -129,11 +129,10 @@ export default {
       if (crystalsSwitchValue !== 0) {
         crystalsSwitchValue /= 900;
       }
-      percentSwitch = parseFloat(crystalsSwitchValue.toFixed(2));
+      percentSwitch = parseFloat(crystalsSwitchValue.toFixed(3));
       //课单差额计算
       if (crystalsSwitch >= 90000) {
-        marginMobaPoint = "不需要课金了哦～"
-        
+        marginMobaPoint = "不需要课金了哦～";
       } else {
         marginMobaPoint = Math.ceil((90000 - crystalsSwitch) / 10000) + "单";
       }
@@ -144,8 +143,7 @@ export default {
       } else {
         unitPrice = '$' + unitPrice.toFixed(2);
       }
-      
-
+      //返回计算结果
       return [
         {
           index: "crystalsSwitch",
