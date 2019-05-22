@@ -131,7 +131,7 @@ export default {
       }
       percentSwitch = parseFloat(crystalsSwitchValue.toFixed(2));
       //课单差额计算
-      if (crystalsSwitch > 90000) {
+      if (crystalsSwitch >= 90000) {
         marginMobaPoint = "不需要课金了哦～"
         
       } else {
