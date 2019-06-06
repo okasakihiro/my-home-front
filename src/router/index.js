@@ -8,7 +8,6 @@ import Crystal from '@/components/tools/Crystal';
 import NotFoundPage from '@/components/NotFoundPage';
 
 Vue.use(Router);
-Vue.use(MavonEditor);
 
 export default new Router({
   mode: "history",
