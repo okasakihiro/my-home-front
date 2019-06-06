@@ -21,7 +21,7 @@
           </el-form-item>
         </el-form>
       </el-col>
-      <el-col :span="6" offset="2">
+      <el-col :span="6" :offset="2">
         <el-table :data="computedCrystalsData"
                   :show-header="false"
                   :cell-style	="tableCenter"
@@ -30,7 +30,7 @@
             <template slot-scope="scope">
               {{ scope.row.name }}
             </template>
-            </el-table-column>
+          </el-table-column>
           <el-table-column prop="value">
             <template slot-scope="scope">
               <div v-if="scope.row.index == 'percentSwitch'">

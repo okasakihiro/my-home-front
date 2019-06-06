@@ -1,11 +1,16 @@
 <template>
-  <div id="footer">{{ message }}</div>
+  <div id="footer">Copyright © 2018-{{ year }} {{ message }}</div>
 </template>
 
 <script>
 export default {
   data() {
-    return { message: "Power By 水原西守歌" };
+    return { 
+      message: "水原西守歌",
+      year: new Date().getFullYear()
+    };
+  },
+  computed: {
   }
 };
 </script>

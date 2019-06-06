@@ -1,11 +1,17 @@
+//Vue core
 import Vue from 'vue';
+//Vue router
 import Router from 'vue-router';
-
+//markdown editor
+import MavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
+//person components
 import Main from '@/components/Main';
-import Crystal from '@/components/Crystal';
+import Crystal from '@/components/tools/Crystal';
 import NotFoundPage from '@/components/NotFoundPage';
 
 Vue.use(Router);
+Vue.use(MavonEditor);
 
 export default new Router({
   mode: "history",
@@ -17,12 +23,18 @@ export default new Router({
     },
     {
       path: '/index',
+      name: '带我超巴？',
       redictor: "/"
     },
     {
       path: '/crystal',
-      name: '带我超巴？',
+      name: '井井计算器',
       component: Crystal
+    },
+    {
+      path: '/blog',
+      name: '混沌',
+      redictor: "https://blog.granbluefantasy.app"
     },
     {
       path: '*',
