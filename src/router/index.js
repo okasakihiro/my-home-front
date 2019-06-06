@@ -2,9 +2,6 @@
 import Vue from 'vue';
 //Vue router
 import Router from 'vue-router';
-//markdown editor
-import MavonEditor from 'mavon-editor'
-import 'mavon-editor/dist/css/index.css'
 //person components
 import Main from '@/components/Main';
 import Crystal from '@/components/tools/Crystal';
