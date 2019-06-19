@@ -16,9 +16,7 @@
         <el-menu-item index="crystal">井井计算器</el-menu-item>
       </el-submenu>
       <el-menu-item style="float:right">
-        <el-button>
-          <el-link :underline="false" href="https://blog.granbluefantasy.app" type="info">个人博客</el-link>
-        </el-button>
+          <el-link :underline="false" href="https://blog.granbluefantasy.app" type="info">博客</el-link>
       </el-menu-item>
     </el-menu>
   </div>

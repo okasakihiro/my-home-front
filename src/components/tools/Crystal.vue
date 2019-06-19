@@ -83,12 +83,12 @@ export default {
   },
   //更新钩子
   updated() {
-    //限制入参参数不能为空字符串
+    //限制入参参数不能为空字符串或字母
     for (let value in this.inputData) {
-      if (this.inputData[value] === "") {
+      if (this.inputData[value] === "" || (typeof this.inputData[value] === 'string')) {
         this.inputData[value] = 0;
       }
-    }
+    };
   },
   //方法
   methods: {
