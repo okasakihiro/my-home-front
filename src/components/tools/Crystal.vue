@@ -85,7 +85,7 @@ export default {
   mounted() {
   //获取API接口数据
     this.$axios.get(
-      `${api.LOCAL_API_URL}${api.GET_CURRENT_EXCHANGE_RATE}`)
+      `${api.API_URL}${api.GET_CURRENT_EXCHANGE_RATE}`)
       .then((res) => {
         //判断请求状态是否为200
          if(res.status !== 200){
