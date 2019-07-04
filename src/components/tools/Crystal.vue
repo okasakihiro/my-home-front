@@ -59,6 +59,7 @@
 </template>
 
 <script>
+import { api } from "../../apis";
 export default {
   name: "Creystal",
   data() {
@@ -81,6 +82,23 @@ export default {
     //深拷贝表单初始值
     this.defaultInput = JSON.parse(JSON.stringify(this.inputData));
   },
+  mounted() {
+  //获取API接口数据
+    this.$axios.get(
+      `${api.LOCAL_API_URL}${api.GET_CURRENT_EXCHANGE_RATE}`)
+      .then((res) => {
+        //判断请求状态是否为200
+         if(res.status !== 200){
+          return;
+        }
+        //填充数据
+        this.usdToJpy = res.data.usd_to_jpy;
+        this.updatedAt = res.data.updated_at;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
   //更新钩子
   updated() {
     //限制入参参数不能为空字符串或字母
@@ -92,7 +110,6 @@ export default {
   },
   //方法
   methods: {
-    
     //重置表单输入
     reset() {
       this.inputData = Object.assign(this.inputData, this.defaultInput);
@@ -137,9 +154,9 @@ export default {
         marginMobaPoint = Math.ceil((90000 - crystalsSwitch) / 10000) + "单";
       }
       //汇率计算
-      unitPrice = yen / this.exchangeRate;
+      unitPrice = yen / this.usdToJpy;
       if (!isFinite(unitPrice) || isNaN(unitPrice)) {
-        unitPrice =  this.exchangeRate;
+        unitPrice =  this.usdToJpy;
       } else {
         unitPrice = '$' + unitPrice.toFixed(2);
       }
@@ -171,14 +188,14 @@ export default {
           value: this.usdToJpy
         },
         {
-          index: "updatedAt",
+          index: "unitPrice",
           name: "一单(10300円)美元金额",
-          value: this.updatedAt
+          value: unitPrice
         },
         {
-          index: "unitPrice",
-          name: "汇率更新时间(GMT+0)",
-          value: unitPrice
+          index: "updatedAt",
+          name: "汇率更新时间",
+          value: this.updatedAt
         },
       ]
     },
