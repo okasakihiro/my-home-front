@@ -6,6 +6,7 @@ import Router from 'vue-router';
 import Main from '@/components/Main';
 import Crystal from '@/components/tools/Crystal';
 import NotFoundPage from '@/components/NotFoundPage';
+import Resume from '@/components/resume/Resume';
 
 Vue.use(Router);
 
@@ -31,6 +32,11 @@ export default new Router({
       path: '/blog',
       name: '混沌',
       redictor: "https://blog.granbluefantasy.app"
+    },
+    {
+      path: '/resume',
+      name: '简历',
+      component: Resume
     },
     {
       path: '*',
