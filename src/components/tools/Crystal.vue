@@ -72,7 +72,7 @@ export default {
         ceruleanStones: 0
       },
       defaultInput: {},
-      usdToJpy: "API服务器物理超度中...",
+      jpyToCny: "API服务器物理超度中...",
       exchangeRate: "API服务器物理超度中...",
       updatedAt: "API服务器物理超度中..."
     };
@@ -88,11 +88,14 @@ export default {
       `${api.API_URL}${api.GET_CURRENT_EXCHANGE_RATE}`)
       .then((res) => {
         //判断请求状态是否为200
-         if(res.status !== 200){
+        if(res.status !== 200){
+          return;
+        }
+        if(res.data.length === 0){
           return;
         }
         //填充数据
-        this.usdToJpy = res.data.usd_to_jpy;
+        this.jpyToCny = res.data.jpy_to_cny;
         this.updatedAt = res.data.updated_at;
       })
       .catch((err) => {
@@ -154,11 +157,11 @@ export default {
         marginMobaPoint = Math.ceil((90000 - crystalsSwitch) / 10000) + "单";
       }
       //汇率计算
-      unitPrice = yen / this.usdToJpy;
+      unitPrice = yen / this.jpyToCny;
       if (!isFinite(unitPrice) || isNaN(unitPrice)) {
-        unitPrice =  this.usdToJpy;
+        unitPrice =  this.jpyToCny;
       } else {
-        unitPrice = '$' + unitPrice.toFixed(2);
+        unitPrice = '¥' + unitPrice.toFixed(2);
       }
       //返回计算结果
       return [
@@ -184,12 +187,12 @@ export default {
         },
         {
           index: "updatedAt",
-          name: "当前汇率：USD => JPY",
-          value: this.usdToJpy
+          name: "当前汇率：JPY(100円) => CNY",
+          value: this.jpyToCny
         },
         {
           index: "unitPrice",
-          name: "一单(10300円)美元金额",
+          name: "一单(10300円)人民币金额",
           value: unitPrice
         },
         {
