@@ -5,7 +5,7 @@
           GBF井井计算器
           <small>——只要攒井就会有翻身的一天</small>
       </h3>
-      <el-col :span="6" :offset="5">
+      <el-col :span="8" :offset="2">
         <el-form v-bind:model="inputData" label-width="180px" size="small">
           <el-form-item label="宝晶石">
             <el-input v-model.number="inputData.crystalsCount"></el-input>
@@ -21,7 +21,7 @@
           </el-form-item>
         </el-form>
       </el-col>
-      <el-col :span="6" :offset="2">
+      <el-col :span="8" :offset="2">
         <el-table :data="computedCrystalsData"
                   :show-header="false"
                   :cell-style	="tableCenter"
@@ -133,7 +133,7 @@ export default {
       let marginMobaPoint = 0;
       let percentSwitch   = 0;
       let unitPrice       = 0;
-      let yen             = 10300;
+      let yen             = 103;
       //宝晶石换算
       crystalsSwitch      = parseInt(inputData.crystalsCount) + 
                             parseInt(inputData.onceTicket * 300) + 
@@ -156,8 +156,8 @@ export default {
       } else {
         marginMobaPoint = Math.ceil((90000 - crystalsSwitch) / 10000) + "单";
       }
-      //汇率计算
-      unitPrice = yen / this.jpyToCny;
+      //一单汇率计算
+      unitPrice = yen * this.jpyToCny;
       if (!isFinite(unitPrice) || isNaN(unitPrice)) {
         unitPrice =  this.jpyToCny;
       } else {
@@ -168,12 +168,12 @@ export default {
         {
           index: "crystalsSwitch",
           name: "宝晶石换算",
-          value: crystalsSwitch
+          value: crystalsSwitch + '颗'
         },
         {
           index: "ticketSwitch",
           name: "抽卡次数换算",
-          value: ticketSwitch
+          value: ticketSwitch  + '次'
         },
         {
           index: "percentSwitch",
