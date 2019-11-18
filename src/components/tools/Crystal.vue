@@ -2,8 +2,8 @@
   <div id="crystals">
     <el-row>
       <h3 class="title">
-          GBF井井计算器
-          <small>——只要攒井就会有翻身的一天</small>
+        GBF井井计算器
+        <small>——只要攒井就会有翻身的一天</small>
       </h3>
       <el-col :span="8" :offset="2">
         <el-form v-bind:model="inputData" label-width="180px" size="small">
@@ -22,14 +22,9 @@
         </el-form>
       </el-col>
       <el-col :span="8" :offset="2">
-        <el-table :data="computedCrystalsData"
-                  :show-header="false"
-                  :cell-style	="tableCenter"
-        >
+        <el-table :data="computedCrystalsData" :show-header="false" :cell-style="tableCenter">
           <el-table-column prop="name">
-            <template slot-scope="scope">
-              {{ scope.row.name }}
-            </template>
+            <template slot-scope="scope">{{ scope.row.name }}</template>
           </el-table-column>
           <el-table-column prop="value">
             <template slot-scope="scope">
@@ -38,23 +33,24 @@
                   <el-progress :text-inside="true" :stroke-width="24" :percentage="scope.row.value"></el-progress>
                 </div>
                 <div v-else>
-                  <el-progress :text-inside="true" :stroke-width="24" :percentage=100 status="success"></el-progress>
+                  <el-progress
+                    :text-inside="true"
+                    :stroke-width="24"
+                    :percentage="100"
+                    status="success"
+                  ></el-progress>
                 </div>
               </div>
-              <div v-else>
-                {{ scope.row.value }}
-              </div>
+              <div v-else>{{ scope.row.value }}</div>
             </template>
           </el-table-column>
-
         </el-table>
       </el-col>
-      
     </el-row>
-        <div class="text-center">
-          <el-button type="danger" v-on:click="reset()" style="margin: 20px auto;">归零</el-button>
-        </div>
-        <div class="text-center">Idea By 是个日本大佬，网站忘记了。</div>
+    <div class="text-center">
+      <el-button type="danger" v-on:click="reset()" style="margin: 20px auto;">归零</el-button>
+    </div>
+    <div class="text-center">Idea By 是个日本大佬，网站忘记了。</div>
   </div>
 </template>
 
@@ -83,22 +79,22 @@ export default {
     this.defaultInput = JSON.parse(JSON.stringify(this.inputData));
   },
   mounted() {
-  //获取API接口数据
-    this.$axios.get(
-      `${api.API_URL}${api.GET_CURRENT_EXCHANGE_RATE}`)
-      .then((res) => {
+    //获取API接口数据
+    this.$axios
+      .get(`${api.API_URL}${api.GET_CURRENT_EXCHANGE_RATE}`)
+      .then(res => {
         //判断请求状态是否为200
-        if(res.status !== 200){
+        if (res.status !== 200) {
           return;
         }
-        if(res.data.length === 0){
+        if (res.data.length === 0) {
           return;
         }
         //填充数据
         this.jpyToCny = res.data.jpy_to_cny;
         this.updatedAt = res.data.updated_at;
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
   },
@@ -106,10 +102,13 @@ export default {
   updated() {
     //限制入参参数不能为空字符串或字母
     for (let value in this.inputData) {
-      if (this.inputData[value] === "" || (typeof this.inputData[value] === 'string')) {
+      if (
+        this.inputData[value] === "" ||
+        typeof this.inputData[value] === "string"
+      ) {
         this.inputData[value] = 0;
       }
-    };
+    }
   },
   //方法
   methods: {
@@ -126,24 +125,26 @@ export default {
     //计算宝晶石数据
     computedCrystalsData() {
       //获取表单数据
-      let inputData       = this.inputData;
+      let inputData = this.inputData;
       //初始化相关数据
-      let crystalsSwitch  = 0;
-      let ticketSwitch    = 0;
+      let crystalsSwitch = 0;
+      let ticketSwitch = 0;
       let marginMobaPoint = 0;
-      let percentSwitch   = 0;
-      let unitPrice       = 0;
-      let yen             = 103;
+      let percentSwitch = 0;
+      let unitPrice = 0;
+      let yen = 105;
       //宝晶石换算
-      crystalsSwitch      = parseInt(inputData.crystalsCount) + 
-                            parseInt(inputData.onceTicket * 300) + 
-                            parseInt(inputData.tenPartTicket * 3000) + 
-                            parseInt(inputData.ceruleanStones * 300);
+      crystalsSwitch =
+        parseInt(inputData.crystalsCount) +
+        parseInt(inputData.onceTicket * 300) +
+        parseInt(inputData.tenPartTicket * 3000) +
+        parseInt(inputData.ceruleanStones * 300);
       //抽卡次数换算
-      ticketSwitch        = Math.floor(inputData.crystalsCount / 300) +
-                            inputData.onceTicket +
-                            inputData.tenPartTicket * 10 +
-                            inputData.ceruleanStones;
+      ticketSwitch =
+        Math.floor(inputData.crystalsCount / 300) +
+        inputData.onceTicket +
+        inputData.tenPartTicket * 10 +
+        inputData.ceruleanStones;
       //一井百分比计算
       let crystalsSwitchValue = crystalsSwitch;
       if (crystalsSwitchValue !== 0) {
@@ -159,21 +160,21 @@ export default {
       //一单汇率计算
       unitPrice = yen * this.jpyToCny;
       if (!isFinite(unitPrice) || isNaN(unitPrice)) {
-        unitPrice =  this.jpyToCny;
+        unitPrice = this.jpyToCny;
       } else {
-        unitPrice = '¥' + unitPrice.toFixed(2);
+        unitPrice = "¥" + unitPrice.toFixed(2);
       }
       //返回计算结果
       return [
         {
           index: "crystalsSwitch",
           name: "宝晶石换算",
-          value: crystalsSwitch + '颗'
+          value: crystalsSwitch + "颗"
         },
         {
           index: "ticketSwitch",
           name: "抽卡次数换算",
-          value: ticketSwitch  + '次'
+          value: ticketSwitch + "次"
         },
         {
           index: "percentSwitch",
@@ -192,16 +193,16 @@ export default {
         },
         {
           index: "unitPrice",
-          name: "一单(10300円)人民币金额",
+          name: "一单(10500円)人民币金额",
           value: unitPrice
         },
         {
           index: "updatedAt",
           name: "汇率更新时间",
           value: this.updatedAt
-        },
-      ]
-    },
+        }
+      ];
+    }
   }
 };
 </script>
@@ -216,7 +217,7 @@ export default {
 .el-form-item__label {
   color: #66ccff;
 }
-.el-form input{
+.el-form input {
   background: rgba(0, 0, 0, 0.32);
   color: #66ccff;
 }
@@ -224,7 +225,8 @@ export default {
   background: rgba(0, 0, 0, 0.32);
   color: #66ccff;
 }
-.el-table, .el-table tr {
+.el-table,
+.el-table tr {
   background: rgba(0, 0, 0, 0.32);
   color: #66ccff;
   border-radius: 20px;
@@ -235,7 +237,7 @@ export default {
 .el-progress-bar__outer {
   background: rgba(0, 0, 0, 0.32);
   color: #66ccff;
-} 
+}
 .el-table::before {
   content: none;
 }
